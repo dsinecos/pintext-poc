@@ -11,7 +11,7 @@ var bcrypt = require('bcrypt');
 const saltRounds = 1;
 
 var pgp = require('pg-promise')();
-var connectionString = "pg://postgres:postgres@localhost:5432/pintext";
+var connectionString = process.env.DATABASE_URL || "pg://postgres:postgres@localhost:5432/pintext";
 var pintextClient = pgp(connectionString);
 
 var publicPath = path.resolve(__dirname, "./public");
