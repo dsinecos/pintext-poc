@@ -1,18 +1,141 @@
-<html>
+<!DOCTYPE html>
+
+<html lang=en>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>pintext</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.5/vue.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
 
 <body>
 
-    <h5> Get URL for your text snippet </h5>
-    <form method="post" enctype="application/x-www-form-urlencoded" action="/getURL">
-        <input type="text" name="title" placeholder="Title for text snippet">
-        <br>    
-        <input type="text" name="source" placeholder="URL for text snippet">
-        <br>
-        <textarea name="textsnippet" placeholder="Paste your text snippet here"></textarea>
-        <br>
-        <input type="submit" value="Get URL">
-    </form>
+    <!-- Navbar -->
+    <ul>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Sign up</a></li>
+        <li><a href="#">Login</a></li>
+    </ul>
+
+    <h2 id="page_title"> Generate permalink for your text snippet and share</h2>
+
+    <div class="container">
+        <div class="row" id="generate_permalink">
+            <div class="col-sm-6">
+                <form id="snippet_form" method="post" enctype="application/x-www-form-urlencoded" action="/getURL">
+                    <input type="text" name="title" placeholder="Title (Optional)" v-model="pintextTitle">
+                    <br>
+                    <input type="text" name="source" placeholder="Reference (URL) (Optional)" v-model="pintextSource">
+                    <br>
+                    <textarea rows="12" name="textsnippet" placeholder="Paste your text snippet here (Required)" v-model="pintextSnippet" required></textarea>
+                    <br>
+                    <input type="submit" value="Copy Permalink">
+                </form>
+            </div>
+
+            <div class="col-sm-6" id="preview">
+                <h4 style="color: black">Preview</h4>
+                <h3 id="pintext_title">{{pintextTitle}}</h3>
+                <h7 id="pintext_source">{{pintextSource}}</h7>
+                <p id="pintext_snippet">{{pintextSnippet}}</p>
+            </div>
+
+        </div>
+    </div>
 
 </body>
+
+<script>
+    var snippet_form = new Vue({
+        el: "#generate_permalink",
+        data: {
+            pintextTitle: "",
+            pintextSource: "",
+            pintextSnippet: "",            
+        },
+        computed: {
+            
+        }
+    });
+
+</script>
+
+<style>
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        background-color: #389;
+        overflow: hidden;
+    }
+
+    li {
+        float: right;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1.15em;
+    }
+
+    li a:hover {
+        background-color: #ddd;
+        text-decoration: none;
+    }
+
+    #page_title {
+        text-align: center;
+    }
+
+    #snippet_form {
+        padding: 20px;
+        margin: 10px;
+    }
+
+    input {
+        width: 100%;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    textarea {
+        width: 100%;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    #preview {
+        padding: 10px;
+        margin-top: 10px;
+        color: lightgray;
+    }
+
+    #pintext_title {
+        font-family: "proxima-nova-soft", "Proxima Nova Soft", Helvetica, Arial, sans-serif;
+        color: #3f3844;
+        text-align: center; 
+    }
+
+    #pintext_snippet {
+        padding: 5px;
+        font-family: "proxima-nova-soft", "Proxima Nova Soft", Helvetica, Arial, sans-serif;
+        color: #3f3844;
+        text-align: left;
+    }
+</style>
 
 </html>
