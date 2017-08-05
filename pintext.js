@@ -86,9 +86,13 @@ app.post('/getURL', function (req, res) {
         });
 
         console.log("The hash is : " + hash);
+        res.write("/textURL/"+pintext.hash);
+        res.end();
+        /*
         res.write(JSON.stringify(pintext, null, "  "));
         res.write("This is the url /textURL/" + hash);
         res.end();
+        */
     });
 
     console.log("Request received");

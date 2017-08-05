@@ -26,10 +26,11 @@
         <li><a href="#">Login</a></li>
     </ul>
 
-    <h2 id="page_title"> Generate permalink for your text snippet and share</h2>
+
 
     <div class="container">
         <div class="row" id="generate_permalink">
+            <h2 id="page_title"> Generate permalink for your text snippet and share</h2>
             <div class="col-sm-6">
                 <form id="snippet_form" method="post" enctype="application/x-www-form-urlencoded" action="/getURL">
                     <input type="text" name="title" placeholder="Title (Optional)" v-model="pintextTitle">
@@ -38,11 +39,13 @@
                     <br>
                     <textarea rows="12" name="textsnippet" placeholder="Paste your text snippet here (Required)" v-model="pintextSnippet" required></textarea>
                     <br>
-                    <input type="submit" value="Copy Permalink">
+                    <input type="submit" value="Generate Permalink">
                 </form>
+                <p id="permalink">Permalink</p>
+                
             </div>
 
-            <div class="col-sm-6" id="preview">
+            <div class="col-sm-5" id="preview">
                 <h4 style="color: black">Preview</h4>
                 <h3 id="pintext_title">{{pintextTitle}}</h3>
                 <h7 id="pintext_source">{{pintextSource}}</h7>
@@ -52,18 +55,58 @@
         </div>
     </div>
 
+    <button id="copy_permalink" onclick="copyToClipboard">Copy Permalink</button>
+    <textarea id="permalink_clipboard" ></textarea>
+
 </body>
 
-<script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#snippet_form").submit(function (e) {
+
+            e.preventDefault(); // Avoid to execute the actual submit of the form.
+
+            //console.log("Inside the ajax thingy");
+
+            var form = $(this);
+            var url = form.attr('action');
+            var method = form.attr('method');
+
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: form.serialize(),
+                success: function (data) {
+                    //$("#permalink").append(JSON.stringify(data, null, "  "))
+                    //alert(JSON.stringify(data, null, "  "));
+                    $("#permalink_clipboard").append("localhost:2347/" + JSON.stringify(data, null, "  "));
+
+                },
+                error: function (data) {
+                    //console.log('An error occurred.');
+                    //console.log(data);
+                }
+            });
+        });
+
+
+    });
+
+    function copyToClipboard() {
+        $('#permalink_clipboard').select();
+        document.execCommand('copy');
+    }
+
+
     var snippet_form = new Vue({
         el: "#generate_permalink",
         data: {
             pintextTitle: "",
             pintextSource: "",
-            pintextSnippet: "",            
+            pintextSnippet: "",
         },
         computed: {
-            
+
         }
     });
 
@@ -127,7 +170,7 @@
     #pintext_title {
         font-family: "proxima-nova-soft", "Proxima Nova Soft", Helvetica, Arial, sans-serif;
         color: #3f3844;
-        text-align: center; 
+        text-align: center;
     }
 
     #pintext_snippet {
@@ -136,6 +179,7 @@
         color: #3f3844;
         text-align: left;
     }
+
 </style>
 
 </html>
