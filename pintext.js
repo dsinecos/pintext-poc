@@ -71,7 +71,13 @@ app.post('/getURL', function (req, res) {
     var inputForHash = req.body.title + req.body.source + req.body.textsnippet;
 
     bcrypt.hash(inputForHash, saltRounds, function (err, hash) {
-        pintext.hash = hash;
+
+        if (hash.indexOf('/') === -1) {
+            pintext.hash = hash;
+        } else  {
+            hash = hash.split('/').join('#');
+            pintext.hash = hash;
+        }
 
         var sqlQuery = `INSERT 
                         INTO pintext (title, source, textsnippet, hash)
