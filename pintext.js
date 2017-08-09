@@ -75,7 +75,7 @@ app.post('/getURL', function (req, res) {
         if (hash.indexOf('/') === -1) {
             pintext.hash = hash;
         } else  {
-            hash = hash.split('/').join('#');
+            hash = hash.split('/').join('.');
             pintext.hash = hash;
         }
 
