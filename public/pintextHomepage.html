@@ -74,6 +74,9 @@
             var url = form.attr('action');
             var method = form.attr('method');
 
+            var permalinkURL = window.location.href;
+            console.log("Host URL " + permalinkURL);
+
             $.ajax({
                 type: "POST",
                 url: url,
@@ -81,7 +84,9 @@
                 success: function (data) {
                     //$("#permalink").append(JSON.stringify(data, null, "  "))
                     //alert(JSON.stringify(data, null, "  "));
-                    $("#permalink_clipboard").append("localhost:2347/" + JSON.stringify(data, null, "  "));
+                    var completeURL = permalinkURL + JSON.stringify(data, null, "  ");
+                    var editedCompleteURL = completeURL.replace(/"/g, "");
+                    $("#permalink_clipboard").append(editedCompleteURL);
 
                 },
                 error: function (data) {

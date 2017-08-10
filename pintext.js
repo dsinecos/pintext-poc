@@ -102,7 +102,7 @@ app.post('/getURL', function (req, res) {
         });
 
         console.log("The hash is : " + hash);
-        res.write("/textURL/"+pintext.hash);
+        res.write('textURL/'+pintext.hash);
         res.end();
         /*
         res.write(JSON.stringify(pintext, null, "  "));
