@@ -30,7 +30,9 @@
 
     <div class="container">
         <div class="row" id="generate_permalink">
-            <h2 id="page_title"> Generate permalink for your text snippet and share</h2>
+            <div class="col-sm-12">
+                <h2 id="page_title"> Generate permalink for your text snippet and share</h2>
+            </div>
             <div class="col-sm-6">
                 <form id="snippet_form" method="post" enctype="application/x-www-form-urlencoded" action="/getURL">
                     <input type="text" name="title" placeholder="Title (Optional)" v-model="pintextTitle">
@@ -42,7 +44,7 @@
                     <input type="submit" value="Generate Permalink">
                 </form>
                 <p id="permalink">Permalink</p>
-                
+
             </div>
 
             <div class="col-sm-5" id="preview">
@@ -56,7 +58,7 @@
     </div>
 
     <button id="copy_permalink" onclick="copyToClipboard()">Copy Permalink</button>
-    <textarea id="permalink_clipboard" ></textarea>
+    <textarea id="permalink_clipboard"></textarea>
 
 </body>
 
@@ -179,7 +181,6 @@
         color: #3f3844;
         text-align: left;
     }
-
 </style>
 
 </html>

@@ -49,7 +49,7 @@ app.get('/textURL/:hash', function (req, res) {
         if (data.length === 0) {
             res.send("There are no categories to display at this point");
         } else {
-            res.render("displayTextSnippet.ejs", {title: data[0].title, textSnippet: data[0].textsnippet});
+            res.render("displayTextSnippet.ejs", {title: data[0].title, source: data[0].source, textSnippet: data[0].textsnippet});
             console.log("Inside displaying text snippet code");
             console.log(data[0].title);
             //res.send("Processed");
