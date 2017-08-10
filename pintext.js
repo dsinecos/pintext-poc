@@ -16,6 +16,10 @@ var pintextClient = pgp(connectionString);
 
 var publicPath = path.resolve(__dirname, "./public");
 
+
+app.set("views", path.resolve(__dirname, "views"));
+app.set('view engine', 'ejs');
+
 app.use(express.static(publicPath));
 //app.use(multer().single('fileName'));
 app.use(require('body-parser').urlencoded({ extended: true }));
@@ -25,7 +29,7 @@ var connectionString = process.env.DATABASE_URL || "pg://postgres:postgres@local
 var client = new pg.Client(connectionString);
 client.connect();
 
-client.query("DROP TABLE IF EXISTS pintext CASCADE");
+//client.query("DROP TABLE IF EXISTS pintext CASCADE");
 client.query("CREATE TABLE IF NOT EXISTS pintext(user_id SERIAL PRIMARY KEY, title varchar(256), source varchar(512), textsnippet varchar, hash varchar(1024))");
 
 app.get('/', function (req, res) {
@@ -45,15 +49,21 @@ app.get('/textURL/:hash', function (req, res) {
         if (data.length === 0) {
             res.send("There are no categories to display at this point");
         } else {
+            res.render("displayTextSnippet.ejs", {title: data[0].title, textSnippet: data[0].textsnippet});
+            console.log("Inside displaying text snippet code");
+            console.log(data[0].title);
+            //res.send("Processed");
+            /*
             res.write("Following categories were retrieved for the user");
             res.write("\n");
             res.write(JSON.stringify(data, null, "  "));
             res.end();
+            */
         }
 
     }).catch(function (error) {
         res.status(500).send("Internal server error ");
-        console.log("Error retrieving from the database");
+        console.log("Error retrieving from the database. The following is the error");
         console.log(error);
     });
 

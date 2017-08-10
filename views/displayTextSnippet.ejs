@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<html lang=en>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>pintext</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.5/vue.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+    <!-- Navbar -->
+    <ul>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Sign up</a></li>
+        <li><a href="#">Login</a></li>
+    </ul>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <h3 id="nice-clean-reading"><%- title %></h3>
+                <p> <%- textSnippet %></p>
+                    
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+<script>
+
+</script>
+
+<style>
+    body {
+        color: #222;
+    }
+
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        background-color: #389;
+        overflow: hidden;
+    }
+
+    li {
+        float: right;
+    }
+
+    li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1.15em;
+    }
+
+    li a:hover {
+        background-color: #ddd;
+        text-decoration: none;
+    }
+
+    .container {
+        max-width: 625px;
+        margin: 0 auto;
+    }
+
+    h3 {
+        margin-top: 4rem;
+        font-size: 3rem;
+        margin-bottom: 1.5rem;
+        color: #111;
+        text-rendering: optimizeLegibility;
+        font-family: 'Open Sans', serif;
+        line-height: 1.2;
+    }
+
+    p {
+        margin-top: 2rem;
+        margin-bottom: 2.5rem;
+        font: 18px/1.6 'Open Sans', sans-serif;
+    }
+</style>
