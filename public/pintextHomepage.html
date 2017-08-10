@@ -26,8 +26,6 @@
         <li><a href="#">Login</a></li>
     </ul>
 
-
-
     <div class="container">
         <div class="row" id="generate_permalink">
             <div class="col-sm-12">
@@ -43,7 +41,15 @@
                     <br>
                     <input type="submit" value="Generate Permalink">
                 </form>
-                <p id="permalink">Permalink</p>
+
+                <button type="button" class="btn btn-default" aria-label="Left Align" id="copy_permalink" onclick="copyToClipboard()"><span class="glyphicon glyphicon-copy" aria-hidden="true"></span> Copy</button>
+                
+                <!--
+                <button id="copy_permalink" onclick="copyToClipboard()">Copy Permalink</button>
+                -->
+                <textarea id="permalink_clipboard"></textarea>
+                
+
 
             </div>
 
@@ -57,8 +63,6 @@
         </div>
     </div>
 
-    <button id="copy_permalink" onclick="copyToClipboard()">Copy Permalink</button>
-    <textarea id="permalink_clipboard"></textarea>
 
 </body>
 
@@ -86,7 +90,7 @@
                     //alert(JSON.stringify(data, null, "  "));
                     var completeURL = permalinkURL + JSON.stringify(data, null, "  ");
                     var editedCompleteURL = completeURL.replace(/"/g, "");
-                    $("#permalink_clipboard").append(editedCompleteURL);
+                    $("#permalink_clipboard").val(editedCompleteURL);
 
                 },
                 error: function (data) {
