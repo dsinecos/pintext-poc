@@ -17,6 +17,14 @@ var pintextClient = pgp(connectionString);
 
 var publicPath = path.resolve(__dirname, "./public");
 
+var allowCrossDomain = function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Credentials', true);
+    //res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+}
+app.use(allowCrossDomain);
 
 app.set("views", path.resolve(__dirname, "views"));
 app.set('view engine', 'ejs');
@@ -73,6 +81,49 @@ app.get('/textURL/:hash', function (req, res) {
 
 });
 
+app.get('/getAllSnippets', function (req, res) {
+
+    /*
+    var demoObject = {
+        name: 1,
+        title: 2,
+        ghanta: 3
+    };
+
+    res.write(JSON.stringify(demoObject, null, "  "));
+    res.end();
+    */
+
+    
+    var sqlQuery = `SELECT *
+                    FROM pintext`;
+
+    pintextClient.query(sqlQuery).then(function (data) {
+
+        if (data.length === 0) {
+            res.send("There are no textSnippets to display at this point");
+        } else {
+            console.log(data);
+            console.log("This is the end");
+            var demoObject = {
+                name: 1,
+                title: 2,
+                ghanta: 3
+            };
+            res.write(JSON.stringify(data, null, "  "));
+            res.end();
+        }
+
+    }).catch(function (error) {
+        res.status(500).send("Internal server error ");
+        console.log("Error retrieving from the database. The following is the error");
+        console.log(error);
+
+    });
+    
+
+})
+
 app.post('/getURL', function (req, res) {
 
     var pintext = {
@@ -110,7 +161,7 @@ app.post('/getURL', function (req, res) {
     console.log("The hash is : " + cryptoHash);
     res.write('textURL/' + cryptoHash);
     res.end();
-    
+
     /*
     bcrypt.hash(inputForHash, saltRounds, function (err, hash) {
 

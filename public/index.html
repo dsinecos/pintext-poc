@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html lang=en>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>pintext</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.5/vue.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <ul id="pintext_navbar">
+        <li id="pintext_navbar_title"><a href="#">Pintext</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Sign up</a></li>
+        <li><a href="#">Login</a></li>
+    </ul>
+
+    <div class="container" id="displayAllSnippets">
+        <div class="row">
+            <div class="sm-col-12">
+                <div class="input-group" id="searchbar">
+                    <span class="input-group-addon glyphicon glyphicon-search" aria-hidden="true" id="basic-addon1"></span>
+                    <input type="text" v-model="searchQuery" class="form-control" placeholder="Search" aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+            </div>
+        </div>
+
+        <div class="row" v-for="textSnippet in filteredSnippets">
+            <div class="sm-col-12 snippet-card">
+
+                <a href="#" class="card-title">{{textSnippet.title}}</a>
+                <p class="card-url">{{textSnippet.source}}</p>
+                <p class="card-snippet">{{textSnippet.textsnippet}}</p>
+                <div class="card-saved-data">
+                    <p>{{textSnippet.hash}}</p>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+</body>
+
+<script>
+    /*
+    var snippetCardData = [];
+
+    $(document).ready(function () {
+
+        $.ajax({
+            type: "GET",
+            url: 'http://localhost:2347/getAllSnippets',
+            success: function (data) {
+                //console.log(data);
+                console.log("We're inside success");
+                snippetCardData = data;
+                console.log("Checking where error happened");
+                console.log(snippetCardData);
+            },
+            error: function (data) {
+                console.log('An error occurred.');
+                console.log(data);
+            }
+        });
+    });
+    */
+
+    var snippetCardData = [
+        {
+            "title": "This is the title of the card John",
+            "source": "This is the URL of the card",
+            "textsnippet": "These documents show how Palantir applies Silicon Valley’s playbook to domestic law enforcement. New users are welcomed with discounted hardware and federal grants, sharing their own data in return for access to others'.",
+            "hash": "post at 2017-08-10 19:11:04"
+        },
+        {
+            "title": "This is the title of the card John",
+            "source": "This is the URL of the card",
+            "textsnippet": "These documents show how Palantir applies Silicon Valley’s playbook to domestic law enforcement. New users are welcomed with discounted hardware and federal grants, sharing their own data in return for access to others'.",
+            "hash": "post at 2017-08-10 19:11:04"
+        },
+        {
+            "title": "This is the title of the card Brucec",
+            "source": "This is the URL of the card",
+            "textsnippet": "These documents show how Palantir applies Silicon Valley’s playbook to domestic law enforcement. New users are welcomed with discounted hardware and federal grants, sharing their own data in return for access to others'.",
+            "hash": "post at 2017-08-10 19:11:04"
+        },
+        {
+            "title": "This is the title of the card Bruce",
+            "source": "This is the URL of the card",
+            "textsnippet": "These documents show how Palantir applies Silicon Valley’s playbook to domestic law enforcement. New users are welcomed with discounted hardware and federal grants, sharing their own data in return for access to others'.",
+            "hash": "post at 2017-08-10 19:11:04"
+        },
+        {
+            "title": "This is the title of the card",
+            "source": "This is the URL of the card",
+            "textsnippet": "These documents show how Palantir applies Silicon Valley’s playbook to domestic law enforcement. New users are welcomed with discounted hardware and federal grants, sharing their own data in return for access to others'.",
+            "hash": "post at 2017-08-10 19:11:04"
+        },
+        {
+            "title": "This is the title of the card",
+            "source": "This is the URL of the card",
+            "textsnippet": "These documents show how Palantir applies Silicon Valley’s playbook to domestic law enforcement. New users are welcomed with discounted hardware and federal grants, sharing their own data in return for access to others'.",
+            "hash": "post at 2017-08-10 19:11:04"
+        },
+        {
+            "title": "This is the title of the card",
+            "source": "This is the URL of the card",
+            "textsnippet": "These documents show how Palantir applies Silicon Valley’s playbook to domestic law enforcement. New users are welcomed with discounted hardware and federal grants, sharing their own data in return for access to others'.",
+            "hash": "post at 2017-08-10 19:11:04"
+        },
+
+    ]
+
+
+    var displaySnippetComponent = new Vue({
+        el: "#displayAllSnippets",
+        data: {
+            searchQuery: "",
+            snippetCard: snippetCardData
+        },
+        computed: {
+            filteredSnippets: function () {
+                var snippetCard_array = this.snippetCard;
+                var searchQuery = this.searchQuery;
+
+                if (!searchQuery) {
+                    return snippetCard_array;
+                }
+
+                searchQuery = searchQuery.trim().toLowerCase();
+
+                snippetCard_array = snippetCard_array.filter(function (item) {
+                    if (item.title.toLowerCase().indexOf(searchQuery) !== -1) {
+                        return item;
+                    }
+                });
+
+                return snippetCard_array;
+            }
+        }
+    });
+
+</script>
+
+<style>
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        background-color: #F8F9FA;
+        overflow: hidden;
+        box-shadow: 2px 2px 2px #888888;
+    }
+
+    li {
+        float: right;
+        margin-right: 20px;
+    }
+
+    li a {
+        display: block;
+        color: #50596c;
+        text-align: center;
+        padding: 14px 10px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1.15em;
+    }
+
+    li a:hover {
+        background-color: #ddd;
+        text-decoration: none;
+    }
+
+    #pintext_navbar_title {
+        float: left;
+        font-size: 1.5em;
+        margin-left: 2%;
+        text-decoration: none;
+    }
+
+    #searchbar {
+        max-width: 500px;
+        margin: auto;
+        margin-top: 5%;
+        margin-bottom: 1%;
+        box-shadow: 2px 2px 2px #888888;
+    }
+
+    .snippet-card {
+        border: 1px #727e96;
+        max-width: 700px;
+        margin: auto;
+        margin-top: 1%;
+        padding: 1%;
+        padding-bottom: 1%;
+        overflow: hidden;
+    }
+
+    .snippet-card:hover {
+        box-shadow: 2px 2px 2px #888888;
+    }
+
+    .snippet-card a:hover {
+        text-decoration: none;
+    }
+
+    .card-title {
+        margin: 2%;
+        font-family: "Sentinel SSm A", "Sentinel SSm B", Georgia, serif;
+        font-weight: 400;
+        font-size: 1.7em;
+        line-height: 1.8;
+        color: rgb(50, 50, 50);
+        ;
+    }
+
+    .card-url {
+        margin-left: 5%;
+        font-family: "Whitney SSm SC A", "Whitney SSm SC B", sans-serif;
+        color: rgb(179, 179, 179);
+    }
+
+    .card-snippet {
+        max-width: 90%;
+        margin-left: 3%;
+        margin-bottom: 0;
+        color: rgb(89, 89, 89);
+        font-family: "Whitney SSm A", "Whitney SSm B", sans-serif;
+    }
+
+    .card-saved-data {
+        margin: 0;
+        float: right;
+        font-family: "Whitney SSm A", "Whitney SSm B", sans-serif;
+        color: rgb(179, 179, 179);
+    }
+</style>
