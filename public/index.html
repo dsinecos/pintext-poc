@@ -14,6 +14,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.5/vue.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 </head>
 
@@ -37,10 +38,12 @@
             </div>
         </div>
 
+        
         <div class="row" v-for="textSnippet in filteredSnippets">
+            
             <div class="sm-col-12 snippet-card">
 
-                <a href="#" class="card-title">{{textSnippet.title}}</a>
+                <a v-bind:href="textSnippet.hash" class="card-title">{{textSnippet.title}}</a>
                 <p class="card-url">{{textSnippet.source}}</p>
                 <p class="card-snippet">{{textSnippet.textsnippet}}</p>
                 <div class="card-saved-data">
@@ -48,7 +51,15 @@
                 </div>
 
             </div>
+
         </div>
+        
+
+        <!--
+        <pintext-displaySnippet v-for="textSnippet in filteredSnippets" v-bind:title="textSnippet.title"></pintext-displaySnippet>
+        -->
+
+
 
 
     </div>
@@ -125,12 +136,23 @@
 
     ]
 
+/*
+    Vue.component('pintext-displaySnippet', {
+        data: function () {
+            return {
+                searchQuery: "",
+                snippetCard: snippetCardData
+            }
+        },
+        template: '<div class="sm-col-12 snippet-card"><a href="#" class="card-title">{{title}}</a><p class="card-url">{{textSnippet.source}}</p><p class="card-snippet">{{textSnippet.textsnippet}}</p><div class="card-saved-data"><p>{{textSnippet.hash}}</p></div></div>'
+    });
+*/
 
-    var displaySnippetComponent = new Vue({
+    new Vue({
         el: "#displayAllSnippets",
         data: {
             searchQuery: "",
-            snippetCard: snippetCardData
+            snippetCard: []
         },
         computed: {
             filteredSnippets: function () {
@@ -151,7 +173,14 @@
 
                 return snippetCard_array;
             }
-        }
+        },
+        mounted: function() {
+            var self = this;
+            axios.get("http://localhost:2347/getAllSnippets").then(function (response) {
+                console.log(response.data);
+                self.snippetCard = response.data;
+            });
+        } 
     });
 
 </script>
@@ -202,7 +231,6 @@
     }
 
     .snippet-card {
-        border: 1px #727e96;
         max-width: 700px;
         margin: auto;
         margin-top: 1%;

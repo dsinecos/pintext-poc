@@ -110,8 +110,9 @@ app.get('/getAllSnippets', function (req, res) {
                 title: 2,
                 ghanta: 3
             };
-            res.write(JSON.stringify(data, null, "  "));
-            res.end();
+            //res.write(JSON.stringify(data, null, "  "));
+            //res.end();
+            res.send(data);
         }
 
     }).catch(function (error) {
