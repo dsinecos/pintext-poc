@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        
+        <!--
         <div class="row" v-for="textSnippet in filteredSnippets">
             
             <div class="sm-col-12 snippet-card">
@@ -53,11 +53,14 @@
             </div>
 
         </div>
-        
-
-        <!--
-        <pintext-displaySnippet v-for="textSnippet in filteredSnippets" v-bind:title="textSnippet.title"></pintext-displaySnippet>
         -->
+
+
+
+        <div class="row" v-for="textSnippet in snippetCardData">
+            <pintext-displaySnippet v-bind:title="textSnippet.title" :key="textSnippet.hash"></pintext-displaySnippet>
+        </div>
+
 
 
 
@@ -136,7 +139,7 @@
 
     ]
 
-/*
+
     Vue.component('pintext-displaySnippet', {
         data: function () {
             return {
@@ -146,7 +149,7 @@
         },
         template: '<div class="sm-col-12 snippet-card"><a href="#" class="card-title">{{title}}</a><p class="card-url">{{textSnippet.source}}</p><p class="card-snippet">{{textSnippet.textsnippet}}</p><div class="card-saved-data"><p>{{textSnippet.hash}}</p></div></div>'
     });
-*/
+
 
     new Vue({
         el: "#displayAllSnippets",
@@ -174,13 +177,13 @@
                 return snippetCard_array;
             }
         },
-        mounted: function() {
+        mounted: function () {
             var self = this;
             axios.get("http://localhost:2347/getAllSnippets").then(function (response) {
                 console.log(response.data);
                 self.snippetCard = response.data;
             });
-        } 
+        }
     });
 
 </script>
